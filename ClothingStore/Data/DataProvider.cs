@@ -34,5 +34,47 @@ namespace ClothingStore.Data
 
 			return await dbset.ToListAsync();
 		}
+
+		public void PutMapped<TOut>(object sender)
+			where TOut: class
+		{
+			var mapper = new Mapper<TOut>();
+
+			var item = mapper.Map(sender);
+
+			var dbSet = _db.Set<TOut>();
+
+			try
+			{
+				dbSet.Add(item);
+
+				_db.SaveChanges();
+			}
+			catch
+			{
+				throw new Exception($"Cant put item in {typeof(TOut).Name} dbSet");
+			}
+		}
+
+		public void UpdateMapped<TOut>(object sender)
+			where TOut : class
+		{
+			var mapper = new Mapper<TOut>();
+
+			var item = mapper.Map(sender);
+
+			var dbSet = _db.Set<TOut>();
+
+			try
+			{
+				dbSet.Update(item);
+
+				_db.SaveChanges();
+			}
+			catch
+			{
+				throw new Exception($"Cant update item in {typeof(TOut).Name} dbSet");
+			}
+		}
 	}
 }

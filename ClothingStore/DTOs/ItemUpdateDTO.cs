@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ClothingStore.Models
+namespace ClothingStore.DTOs
 {
-	public class Item
+	public class ItemUpdateDTO
 	{
 		public int Id { get; set; }
 		public string Color { get; set; }
@@ -13,7 +13,5 @@ namespace ClothingStore.Models
 		public int Price { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public int? ItemCount { get; set; }
-		public ICollection<ItemSize> ItemSizes { get; set; }
 	}
 }

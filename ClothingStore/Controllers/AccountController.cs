@@ -14,7 +14,7 @@ using ClothingStore.Data;
 
 namespace ClothingStore.Controllers
 {
-	//[RoutePrefix]
+	[Route("api/[controller]/")]
 	public class AccountController : Controller
 	{
 		DataProvider _dataProvider;
@@ -24,7 +24,7 @@ namespace ClothingStore.Controllers
 			_dataProvider = dp;
 		}
 
-		[Route("signin"), HttpPost]
+		[HttpPost("signin")]
 		//[SwaggerResponse]
 		public async Task<IActionResult> Token(string userName, string password)
 		{
