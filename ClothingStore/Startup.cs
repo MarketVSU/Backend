@@ -13,6 +13,10 @@ using System.Reflection;
 using System.IO;
 using ClothingStore.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using ClothingStore.Configuration.AuthTokenConfig;
+using ClothingStore.Data;
 
 namespace ClothingStore
 {
@@ -29,6 +33,29 @@ namespace ClothingStore
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer(options =>
+				{
+					options.RequireHttpsMetadata = false;
+					options.TokenValidationParameters = new TokenValidationParameters
+					{
+						ValidateIssuer = true,
+
+						ValidIssuer = AuthOptions.ISSUER,
+
+						ValidateAudience = true,
+
+						ValidAudience = AuthOptions.AUDIENCE,
+
+						ValidateLifetime = true,
+
+						IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+
+						ValidateIssuerSigningKey = true
+					};
+				}
+				);
 
 			string connection = Configuration.GetConnectionString("DefaultConnection");
 
@@ -52,6 +79,8 @@ namespace ClothingStore
 				var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 				c.IncludeXmlComments(xmlPath);
 			});
+
+			services.AddScoped<DataProvider>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

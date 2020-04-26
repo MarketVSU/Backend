@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Gennadiy\\source\\repos\\ClothingStore\\ClothingStore\\ClothingStore.csproj": {}
+    "C:\\Users\\Gennadiy\\Desktop\\tp\\Backend\\ClothingStore\\ClothingStore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Gennadiy\\source\\repos\\ClothingStore\\ClothingStore\\ClothingStore.csproj": {
+    "C:\\Users\\Gennadiy\\Desktop\\tp\\Backend\\ClothingStore\\ClothingStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Gennadiy\\source\\repos\\ClothingStore\\ClothingStore\\ClothingStore.csproj",
+        "projectUniqueName": "C:\\Users\\Gennadiy\\Desktop\\tp\\Backend\\ClothingStore\\ClothingStore.csproj",
         "projectName": "ClothingStore",
-        "projectPath": "C:\\Users\\Gennadiy\\source\\repos\\ClothingStore\\ClothingStore\\ClothingStore.csproj",
+        "projectPath": "C:\\Users\\Gennadiy\\Desktop\\tp\\Backend\\ClothingStore\\ClothingStore.csproj",
         "packagesPath": "C:\\Users\\Gennadiy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Gennadiy\\source\\repos\\ClothingStore\\ClothingStore\\obj\\",
+        "outputPath": "C:\\Users\\Gennadiy\\Desktop\\tp\\Backend\\ClothingStore\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Microsoft\\Xamarin\\NuGet\\",
@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "Microsoft.AspNetCore.Razor.Design": {
               "suppressParent": "All",

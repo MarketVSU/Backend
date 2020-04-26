@@ -12318,6 +12318,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
       "Microsoft.AspNetCore.App >= 2.2.0",
+      "Microsoft.AspNetCore.Authentication.JwtBearer >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
       "Swashbuckle.AspNetCore >= 5.3.1",
@@ -12334,11 +12335,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Gennadiy\\source\\repos\\ClothingStore\\ClothingStore\\ClothingStore.csproj",
+      "projectUniqueName": "C:\\Users\\Gennadiy\\Desktop\\tp\\Backend\\ClothingStore\\ClothingStore.csproj",
       "projectName": "ClothingStore",
-      "projectPath": "C:\\Users\\Gennadiy\\source\\repos\\ClothingStore\\ClothingStore\\ClothingStore.csproj",
+      "projectPath": "C:\\Users\\Gennadiy\\Desktop\\tp\\Backend\\ClothingStore\\ClothingStore.csproj",
       "packagesPath": "C:\\Users\\Gennadiy\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Gennadiy\\source\\repos\\ClothingStore\\ClothingStore\\obj\\",
+      "outputPath": "C:\\Users\\Gennadiy\\Desktop\\tp\\Backend\\ClothingStore\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "F:\\Microsoft\\Xamarin\\NuGet\\",
@@ -12375,6 +12376,10 @@
             "target": "Package",
             "version": "[2.2.0, )",
             "autoReferenced": true
+          },
+          "Microsoft.AspNetCore.Authentication.JwtBearer": {
+            "target": "Package",
+            "version": "[2.2.0, )"
           },
           "Microsoft.AspNetCore.Razor.Design": {
             "suppressParent": "All",
