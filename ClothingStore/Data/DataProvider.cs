@@ -10,7 +10,7 @@ namespace ClothingStore.Data
 {
 	public class DataProvider
 	{
-		private DbContext _db;
+		private protected DbContext _db;
 
 		public DataProvider(ApplicationContext db)
 		{
