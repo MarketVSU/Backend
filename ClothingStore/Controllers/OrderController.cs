@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ClothingStore.Controllers
 {
-	[Route("api/[conroller]/")]
+	[Route("api/[controller]/")]
 	public class OrderController
 	{
 		DataProvider dataProvider;
