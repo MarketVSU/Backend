@@ -35,7 +35,7 @@ namespace ClothingStore.Data
 			return await dbset.ToListAsync();
 		}
 
-		public void PutMapped<TOut>(object sender)
+		public void CreateMapped<TOut>(object sender)
 			where TOut: class
 		{
 			var mapper = new Mapper<TOut>();

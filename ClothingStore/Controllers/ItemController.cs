@@ -27,12 +27,12 @@ namespace ClothingStore.Controllers
 			return (await dp.GetIEnumerableMapped<Item, ItemDTO>()).ToList();
 		}
 
-		[HttpPut("CreateNewItem")]
+		[HttpPost("CreateNewItem")]
 		public HttpResponseMessage PutItem(ItemDTO item)
 		{
 			try
 			{
-				dp.PutMapped<Item>(item);
+				dp.CreateMapped<Item>(item);
 			}
 			catch(Exception ex)
 			{
@@ -44,7 +44,7 @@ namespace ClothingStore.Controllers
 			return new HttpResponseMessage(HttpStatusCode.Created);
 		}
 
-		[HttpPost("FilterItems")]
+		[HttpGet("FilterItems")]
 		public async Task<ActionResult<IEnumerable<ItemDTO>>> FilterItems(string filteringValue)
 		{
 			return (await dp.GetIEnumerableMapped<Item, ItemDTO>())
@@ -53,7 +53,7 @@ namespace ClothingStore.Controllers
 					|| item.Color.Contains(filteringValue)).ToList();
 		}
 
-		[HttpPost("Update")]
+		[HttpPut("Update")]
 		public HttpResponseMessage UpdateItem(ItemUpdateDTO item)
 		{
 			try
@@ -70,7 +70,7 @@ namespace ClothingStore.Controllers
 			return new HttpResponseMessage(HttpStatusCode.OK);
 		}
 
-		[HttpPost("GetItemsByFilter")]
+		[HttpGet("GetItemsByFilter")]
 		public async Task<ActionResult<IEnumerable<ItemDTO>>> GetItemsByFilter(ItemFilterDTO filter)
 		{
 			if (!string.IsNullOrEmpty(filter.Color))
