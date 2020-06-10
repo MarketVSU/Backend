@@ -2,9 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ClothingStore.Data.ModelsConfiguration
 {
@@ -20,12 +19,20 @@ namespace ClothingStore.Data.ModelsConfiguration
 			builder.HasIndex(user => user.Login)
 				.IsUnique(true);
 
-			builder.Property(user => user.Password)
-				.IsRequired()
-				.HasMaxLength(60);
-
 			builder.HasData(
-				new User() { Id = 1, IsAdmin = true, Login = "admin", Password = "admin", Name = "admin" });
+				new User() { Id = 1, IsAdmin = true, Login = "admin", Password = SetHash("admin"), Name = "admin" });
+		}
+
+		private string SetHash(string password)
+		{
+			var hash = Encoding.UTF8.GetBytes(password);
+
+			var sha = new SHA1CryptoServiceProvider();
+			var shaHash = sha.ComputeHash(hash);
+
+			var hashedPass = Convert.ToBase64String(shaHash);
+
+			return hashedPass;
 		}
 	}
 }

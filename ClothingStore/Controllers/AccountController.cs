@@ -34,6 +34,8 @@ namespace ClothingStore.Controllers
 			if ((await _dataProvider.GetIEnumerable<User>()).ToList().Any(user => user.Login == userDTO.Login))
 				return new HttpResponseMessage(HttpStatusCode.Conflict);
 
+			userDTO.Password = SetHash(userDTO.Password);
+
 			await _dataProvider.CreateMapped<User>(userDTO);
 
 			return new HttpResponseMessage(HttpStatusCode.Created);
@@ -70,7 +72,7 @@ namespace ClothingStore.Controllers
 
 		private async Task<ClaimsIdentity> GetIdentity(string username, string password)
 		{
-			User person = (await _dataProvider.GetIEnumerable<User>()).ToList().FirstOrDefault(x => x.Name == username && SetHash(x.Password) == password);
+			User person = (await _dataProvider.GetIEnumerable<User>()).ToList().FirstOrDefault(x => x.Login == username && x.Password == SetHash(password));
 
 			if (person != null)
 			{
@@ -91,13 +93,12 @@ namespace ClothingStore.Controllers
 
 		private string SetHash(string password)
 		{
-			var hash = Encoding.ASCII.GetBytes(password);
+			var hash = Encoding.UTF8.GetBytes(password);
 
 			var sha = new SHA1CryptoServiceProvider();
 			var shaHash = sha.ComputeHash(hash);
 
-			var asciiEnc = new ASCIIEncoding();
-			var hashedPass = asciiEnc.GetString(shaHash);
+			var hashedPass = Convert.ToBase64String(shaHash);
 
 			return hashedPass;
 		}
