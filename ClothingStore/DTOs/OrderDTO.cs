@@ -12,6 +12,7 @@ namespace ClothingStore.DTOs
 		{
 			Address = address;
 		}
+		public int Id { get; set; }
 		public int UserId { get; set; }
 		public string Address { get; set; }
 		public BascketDTO Bascket { get; set; }

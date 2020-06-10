@@ -7,7 +7,9 @@ namespace ClothingStore.DTOs
 {
 	public class ItemSizeDTO
 	{
-		public int ItemSizeId { get; set; }
+		public int Id { get; set; }
+		public int ItemId { get; set; }
+		public int SizeId { get; set; }
 		public int Count { get; set; }
 	}
 }

@@ -37,6 +37,7 @@ namespace ClothingStore.Models
 		public int UserId { get; set; }
 		public string Address { get; set; }
 		public User User { get; set; }
+		public Guid OrderNumber { get; set; } 
 		public OrderStatusEnum OrderStatus { get; set; } = OrderStatusEnum.New;
 		public PaymentOrderStatus PaymentOrderStatus { get; set; } = PaymentOrderStatus.Unpaid;
 		public ICollection<ItemInOrder> ItemInOrders { get; private set; }

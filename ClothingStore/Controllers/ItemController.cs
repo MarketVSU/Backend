@@ -112,10 +112,46 @@ namespace ClothingStore.Controllers
 			return new HttpResponseMessage(HttpStatusCode.OK);
 		}
 
-		//[HttpGet("GetItemById")]
-		//public async Task<ActionResult<ItemDTO>> GetItemById(int itemId)
-		//{
+		[HttpGet("GetItemById")]
+		public async Task<ActionResult<ItemDTO>> GetItemById(int itemId)
+		{
+			return (await dp.GetIEnumerableMapped<Item, ItemDTO>()).ToList().First(item => item.Id == itemId);
+		}
 
-		//}
+		[Authorize(Roles = "admin")]
+		[HttpPost("AddItemSize")]
+		public async Task<HttpResponseMessage> AddItemSize(ItemSizeDTO itemSize)
+		{
+			try
+			{
+				await dp.CreateMapped<ItemSize>(itemSize);
+			}
+			catch (Exception ex)
+			{
+				var errorResponse = new HttpResponseMessage(HttpStatusCode.BadRequest);
+				errorResponse.Content = new StringContent(ex.Message);
+				return errorResponse;
+			}
+
+			return new HttpResponseMessage(HttpStatusCode.Created);
+		}
+
+		[Authorize(Roles = "admin")]
+		[HttpPut("UpdateItemSize")]
+		public async Task<HttpResponseMessage> UpdateItemSizeCount(ItemSizeDTO itemSize)
+		{
+			try
+			{
+				await dp.UpdateMapped<ItemSize>(itemSize);
+			}
+			catch (Exception ex)
+			{
+				var errorResponse = new HttpResponseMessage(HttpStatusCode.BadRequest);
+				errorResponse.Content = new StringContent(ex.Message);
+				return errorResponse;
+			}
+
+			return new HttpResponseMessage(HttpStatusCode.Created);
+		}
 	}
 }
