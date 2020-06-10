@@ -1,6 +1,7 @@
 ﻿using ClothingStore.Data;
 using ClothingStore.DTOs;
 using ClothingStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace ClothingStore.Controllers
 {
 	[Route("api/[controller]")]
-	public class ItemController: Controller
+	public class ItemController : Controller
 	{
 		private DataProvider dp;
 
@@ -27,6 +28,7 @@ namespace ClothingStore.Controllers
 			return (await dp.GetIEnumerableMapped<Item, ItemDTO>()).ToList();
 		}
 
+		[Authorize(Roles = "admin")]
 		[HttpPost("CreateNewItem")]
 		public async Task<HttpResponseMessage> PutItem(ItemDTO item)
 		{
@@ -34,7 +36,7 @@ namespace ClothingStore.Controllers
 			{
 				await dp.CreateMapped<Item>(item);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				var errorResponse = new HttpResponseMessage(HttpStatusCode.BadRequest);
 				errorResponse.Content = new StringContent(ex.Message);
@@ -48,11 +50,12 @@ namespace ClothingStore.Controllers
 		public async Task<ActionResult<IEnumerable<ItemDTO>>> FilterItems(string filteringValue)
 		{
 			return (await dp.GetIEnumerableMapped<Item, ItemDTO>())
-				.Where(item => item.Name.Contains(filteringValue) 
+				.Where(item => item.Name.Contains(filteringValue)
 					|| item.Description.Contains(filteringValue)
 					|| item.Color.Contains(filteringValue)).ToList();
 		}
 
+		[Authorize(Roles = "admin")]
 		[HttpPut("Update")]
 		public async Task<HttpResponseMessage> UpdateItem(ItemUpdateDTO item)
 		{
@@ -89,6 +92,24 @@ namespace ClothingStore.Controllers
 					: (await dp.GetIEnumerableMapped<Item, ItemDTO>())
 					.Where(x => x.Price >= filter.StartPrice && x.Price <= filter.EndPrice)
 					.ToList();
+		}
+
+		[Authorize(Roles = "admin")]
+		[HttpPost("DeleteItem")]
+		public async Task<HttpResponseMessage> DeleteItem(int itemId)
+		{
+			try
+			{
+				await dp.DeleteMapped<Item>((await dp.GetIEnumerable<Item>()).ToList().First(q => q.Id == itemId));
+			}
+			catch (Exception ex)
+			{
+				var errorResponse = new HttpResponseMessage(HttpStatusCode.BadRequest);
+				errorResponse.Content = new StringContent(ex.Message);
+				return errorResponse;
+			}
+
+			return new HttpResponseMessage(HttpStatusCode.OK);
 		}
 	}
 }

@@ -76,5 +76,26 @@ namespace ClothingStore.Data
 				throw new Exception($"Cant update item in {typeof(TOut).Name} dbSet");
 			}
 		}
+
+		public async Task DeleteMapped<TOut>(object sender)
+			where TOut : class
+		{
+			var mapper = new Mapper<TOut>();
+
+			var item = mapper.Map(sender);
+
+			var dbSet = _db.Set<TOut>();
+
+			try
+			{
+				dbSet.Remove(item);
+
+				await _db.SaveChangesAsync();
+			}
+			catch
+			{
+				throw new Exception($"Cant delete item in {typeof(TOut).Name} dbSet");
+			}
+		}
 	}
 }
