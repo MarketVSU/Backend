@@ -22,12 +22,12 @@ namespace ClothingStore.Controllers
 		}
 
 		[HttpPost("AddSize")]
-		public HttpResponseMessage AddSize(SizeDTO sizeDTO)
+		public async Task<HttpResponseMessage> AddSize(SizeDTO sizeDTO)
 		{
 
 			try
 			{
-				dp.CreateMapped<Size>(sizeDTO);
+				await dp.CreateMapped<Size>(sizeDTO);
 			}
 			catch(Exception ex)
 			{

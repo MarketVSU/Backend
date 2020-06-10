@@ -35,7 +35,7 @@ namespace ClothingStore.Data
 			return await dbset.ToListAsync();
 		}
 
-		public void CreateMapped<TOut>(object sender)
+		public async Task CreateMapped<TOut>(object sender)
 			where TOut: class
 		{
 			var mapper = new Mapper<TOut>();
@@ -46,9 +46,9 @@ namespace ClothingStore.Data
 
 			try
 			{
-				dbSet.Add(item);
+				await dbSet.AddAsync(item);
 
-				_db.SaveChanges();
+				await _db.SaveChangesAsync();
 			}
 			catch
 			{
@@ -56,7 +56,7 @@ namespace ClothingStore.Data
 			}
 		}
 
-		public void UpdateMapped<TOut>(object sender)
+		public async Task UpdateMapped<TOut>(object sender)
 			where TOut : class
 		{
 			var mapper = new Mapper<TOut>();
@@ -69,7 +69,7 @@ namespace ClothingStore.Data
 			{
 				dbSet.Update(item);
 
-				_db.SaveChanges();
+				await _db.SaveChangesAsync();
 			}
 			catch
 			{

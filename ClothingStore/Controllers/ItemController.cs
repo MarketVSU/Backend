@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ClothingStore.Controllers
 {
-	[Route("api/[controller]/")]
+	[Route("api/[controller]")]
 	public class ItemController: Controller
 	{
 		private DataProvider dp;
@@ -28,11 +28,11 @@ namespace ClothingStore.Controllers
 		}
 
 		[HttpPost("CreateNewItem")]
-		public HttpResponseMessage PutItem(ItemDTO item)
+		public async Task<HttpResponseMessage> PutItem(ItemDTO item)
 		{
 			try
 			{
-				dp.CreateMapped<Item>(item);
+				await dp.CreateMapped<Item>(item);
 			}
 			catch(Exception ex)
 			{
@@ -54,11 +54,11 @@ namespace ClothingStore.Controllers
 		}
 
 		[HttpPut("Update")]
-		public HttpResponseMessage UpdateItem(ItemUpdateDTO item)
+		public async Task<HttpResponseMessage> UpdateItem(ItemUpdateDTO item)
 		{
 			try
 			{
-				dp.UpdateMapped<Item>(item);
+				await dp.UpdateMapped<Item>(item);
 			}
 			catch (Exception ex)
 			{

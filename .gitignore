@@ -1,6 +1,6 @@
 
 *.cache
-.vs/ClothingStore/v16/.suo
-.vs/ClothingStore/v16/Server/sqlite3/storage.ide-wal
+.vs/ClothingStore
 .vs/ClothingStore/DesignTimeBuild/.dtbcache
-ClothingStore/obj/Debug/netcoreapp3.0/ClothingStore.csprojAssemblyReference.cache
+ClothingStore/bin
+ClothingStore/obj

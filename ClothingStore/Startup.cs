@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using ClothingStore.Configuration.AuthTokenConfig;
 using ClothingStore.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace ClothingStore
 {
@@ -80,7 +81,7 @@ namespace ClothingStore
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostEnvironment env)
 		{
 			app.UseStaticFiles();
 
@@ -104,7 +105,15 @@ namespace ClothingStore
 			app.UseSwaggerUI(c =>
 			{
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
-				c.RoutePrefix = string.Empty;
+				c.RoutePrefix = "swagger";
+			});
+
+			app.UseRouting();
+
+			app.UseEndpoints(end =>
+			{
+				end.MapDefaultControllerRoute();
+				end.MapControllerRoute("api", "{controller=Home}/{action=Index}/{id?}");
 			});
 		}
 	}

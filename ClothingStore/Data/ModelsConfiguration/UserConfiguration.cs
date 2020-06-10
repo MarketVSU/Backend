@@ -25,7 +25,7 @@ namespace ClothingStore.Data.ModelsConfiguration
 				.HasMaxLength(60);
 
 			builder.HasData(
-				new User() { Id = 1, IsAdmin = true, Login = "admin", Password = "admin" });
+				new User() { Id = 1, IsAdmin = true, Login = "admin", Password = "admin", Name = "admin" });
 		}
 	}
 }

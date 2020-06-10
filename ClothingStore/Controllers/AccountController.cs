@@ -11,6 +11,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ClothingStore.DTOs;
 using ClothingStore.Data;
+using System.Text;
+using System.Security.Cryptography;
+using System.Net.Http;
+using System.Net;
 
 namespace ClothingStore.Controllers
 {
@@ -24,8 +28,18 @@ namespace ClothingStore.Controllers
 			_dataProvider = dp;
 		}
 
+		[HttpPost("RegisterUser")]
+		public async Task<HttpResponseMessage> Register(UserDTO userDTO)
+		{
+			if ((await _dataProvider.GetIEnumerable<User>()).ToList().Any(user => user.Login == userDTO.Login))
+				return new HttpResponseMessage(HttpStatusCode.Conflict);
+
+			await _dataProvider.CreateMapped<User>(userDTO);
+
+			return new HttpResponseMessage(HttpStatusCode.Created);
+		}
+
 		[HttpPost("signin")]
-		//[SwaggerResponse]
 		public async Task<IActionResult> Token(string userName, string password)
 		{
 			var identity = await GetIdentity(userName, password);
@@ -56,7 +70,7 @@ namespace ClothingStore.Controllers
 
 		private async Task<ClaimsIdentity> GetIdentity(string username, string password)
 		{
-			User person = (await _dataProvider.GetIEnumerable<User>()).ToList().FirstOrDefault(x => x.Name == username && x.Password == password);
+			User person = (await _dataProvider.GetIEnumerable<User>()).ToList().FirstOrDefault(x => x.Name == username && SetHash(x.Password) == password);
 
 			if (person != null)
 			{
@@ -73,6 +87,19 @@ namespace ClothingStore.Controllers
 
 			// если пользователя не найдено
 			return null;
+		}
+
+		private string SetHash(string password)
+		{
+			var hash = Encoding.ASCII.GetBytes(password);
+
+			var sha = new SHA1CryptoServiceProvider();
+			var shaHash = sha.ComputeHash(hash);
+
+			var asciiEnc = new ASCIIEncoding();
+			var hashedPass = asciiEnc.GetString(shaHash);
+
+			return hashedPass;
 		}
 	}
 }

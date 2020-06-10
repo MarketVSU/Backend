@@ -20,15 +20,18 @@ namespace ClothingStore.Models
 		{
 			get 
 			{
+				return _totalPrice;
+			}
+			set
+			{
 				if (ItemInOrders.Any())
 				{
 					_totalPrice = 0;
-					foreach(var item in ItemInOrders)
+					foreach (var item in ItemInOrders)
 					{
 						_totalPrice += item.ItemPrice;
 					}
 				}
-				return _totalPrice;
 			}
 		}
 		public int UserId { get; set; }
