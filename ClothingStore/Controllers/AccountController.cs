@@ -75,7 +75,8 @@ namespace ClothingStore.Controllers
 		[HttpGet("GetRole")]
 		public IActionResult GetRole()
 		{
-			return Ok(User.Identity.Name);
+			var a = User.Claims.ToList()[1].Value;
+			return Ok(a);
 		}
 
 		private async Task<ClaimsIdentity> GetIdentity(string username, string password)

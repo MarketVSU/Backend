@@ -111,5 +111,11 @@ namespace ClothingStore.Controllers
 
 			return new HttpResponseMessage(HttpStatusCode.OK);
 		}
+
+		//[HttpGet("GetItemById")]
+		//public async Task<ActionResult<ItemDTO>> GetItemById(int itemId)
+		//{
+
+		//}
 	}
 }

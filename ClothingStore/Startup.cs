@@ -84,6 +84,8 @@ namespace ClothingStore
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostEnvironment env)
 		{
+			app.UseAuthentication();
+
 			app.UseStaticFiles();
 
 			if (env.IsDevelopment())
@@ -110,6 +112,8 @@ namespace ClothingStore
 			});
 
 			app.UseRouting();
+
+			app.UseAuthorization();
 
 			app.UseEndpoints(end =>
 			{
