@@ -19,6 +19,8 @@ namespace ClothingStore
 {
 	public class Startup
 	{
+		readonly string MyAllowSpecificOrigins = "MyPolicy";
+
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
@@ -29,6 +31,17 @@ namespace ClothingStore
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddCors(options =>
+			{
+				options.AddPolicy(name: MyAllowSpecificOrigins,
+					builder =>
+					{
+						builder.WithOrigins("https://u1075009.plsk.regruhosting.ru/RegisterUser", "http://u1075009.plsk.regruhosting.ru/RegisterUser")
+						.AllowAnyMethod()
+						.AllowCredentials();
+					});
+			});
+
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -111,13 +124,15 @@ namespace ClothingStore
 				c.RoutePrefix = "swagger";
 			});
 
-			app.UseRouting();
+			app.UseRouting()
+				.UseCors(MyAllowSpecificOrigins);
 
 			app.UseAuthorization();
 
 			app.UseEndpoints(end =>
 			{
 				end.MapDefaultControllerRoute();
+
 				end.MapControllerRoute("api", "{controller=Home}/{action=Index}/{id?}");
 			});
 		}

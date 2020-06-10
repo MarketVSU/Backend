@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 using System.Net.Http;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace ClothingStore.Controllers
 {
@@ -110,6 +111,12 @@ namespace ClothingStore.Controllers
 			var hashedPass = Convert.ToBase64String(shaHash);
 
 			return hashedPass;
+		}
+
+		public async Task<IActionResult> GetUserId(ClaimsPrincipal user)
+		{
+			int userId = ( await _userDataProvider.GetIEnumerable<User>()).First(us => us.Login == user.Claims.ToList()[1].Value).Id;
+			return Ok(userId);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using ClothingStore.Data;
 using ClothingStore.DTOs;
 using ClothingStore.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
