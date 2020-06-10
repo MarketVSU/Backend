@@ -15,6 +15,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Net.Http;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClothingStore.Controllers
 {
@@ -68,6 +69,13 @@ namespace ClothingStore.Controllers
 			};
 
 			return Json(response);
+		}
+
+		[Authorize]
+		[HttpGet("GetRole")]
+		public IActionResult GetRole()
+		{
+			return Ok("admin");
 		}
 
 		private async Task<ClaimsIdentity> GetIdentity(string username, string password)
