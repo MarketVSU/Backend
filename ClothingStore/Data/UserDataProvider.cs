@@ -24,5 +24,12 @@ namespace ClothingStore.Data
 
 			return mapper.Map(await dbSet.FirstOrDefaultAsync(x => x.Id == id));
 		}
+
+		public async Task<bool> GetUserRole(int id)
+		{
+			var dbSet = _db.Set<User>();
+
+			return (await dbSet.FirstOrDefaultAsync(x => x.Id == id)).IsAdmin;
+		}
 	}
 }

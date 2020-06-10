@@ -22,22 +22,22 @@ namespace ClothingStore.Controllers
 	[Route("api/[controller]/")]
 	public class AccountController : Controller
 	{
-		DataProvider _dataProvider;
+		UserDataProvider _userDataProvider;
 
-		public AccountController(DataProvider dp)
+		public AccountController( UserDataProvider userDp)
 		{
-			_dataProvider = dp;
+			_userDataProvider = userDp;
 		}
 
 		[HttpPost("RegisterUser")]
 		public async Task<HttpResponseMessage> Register(UserDTO userDTO)
 		{
-			if ((await _dataProvider.GetIEnumerable<User>()).ToList().Any(user => user.Login == userDTO.Login))
+			if ((await _userDataProvider.GetIEnumerable<User>()).ToList().Any(user => user.Login == userDTO.Login))
 				return new HttpResponseMessage(HttpStatusCode.Conflict);
 
 			userDTO.Password = SetHash(userDTO.Password);
 
-			await _dataProvider.CreateMapped<User>(userDTO);
+			await _userDataProvider.CreateMapped<User>(userDTO);
 
 			return new HttpResponseMessage(HttpStatusCode.Created);
 		}
@@ -75,12 +75,12 @@ namespace ClothingStore.Controllers
 		[HttpGet("GetRole")]
 		public IActionResult GetRole()
 		{
-			return Ok("admin");
+			return Ok(User.Identity.Name);
 		}
 
 		private async Task<ClaimsIdentity> GetIdentity(string username, string password)
 		{
-			User person = (await _dataProvider.GetIEnumerable<User>()).ToList().FirstOrDefault(x => x.Login == username && x.Password == SetHash(password));
+			User person = (await _userDataProvider.GetIEnumerable<User>()).ToList().FirstOrDefault(x => x.Login == username && x.Password == SetHash(password));
 
 			if (person != null)
 			{

@@ -78,6 +78,7 @@ namespace ClothingStore
 			});
 
 			services.AddScoped<DataProvider>();
+			services.AddScoped<UserDataProvider>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
