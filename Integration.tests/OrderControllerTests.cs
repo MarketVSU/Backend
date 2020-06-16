@@ -64,6 +64,19 @@ namespace Integration.tests
 			}
 
 			var client = new RestClient("http://localhost");
+			
+			int userId;
+
+			using (var context = new ApplicationContext(options))
+			{
+				var a = "asdsadda";
+
+				context.Users.Add(new User() {Login = a, Password = "asdasdasd", Name = "asdsadasdads"});
+
+				context.SaveChanges();
+
+				userId = context.Users.First(us => us.Login == a).Id;
+			}
 
 			var request = new RestRequest("api/Order/CreateOrder");
 			request.AddParameter("auth_token", token);
@@ -75,6 +88,7 @@ namespace Integration.tests
 				}
 			});
 			request.AddParameter("address", "qwwqwqwww");
+			request.AddParameter("userId", userId);
 
 			var response = client.Post(request);
 
